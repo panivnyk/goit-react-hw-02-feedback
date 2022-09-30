@@ -1,16 +1,16 @@
 // import styled
-import { Div, Button, P, Span } from 'components/App.styled';
+import { Div, Button, PHeader, PStat, Span } from 'components/App.styled';
 
 export const App = () => {
   return (
     <Div>
-      <P>Please leave feedback</P>
+      <PHeader>Please leave feedback</PHeader>
       <div>
         <Button>Good</Button>
         <Button>Neutral</Button>
         <Button>Bad</Button>
       </div>
-      <P>Statistics:</P>
+      <PStat>Statistics:</PStat>
       <Span>Good:</Span>
       <Span>Neutral:</Span>
       <Span>Bad:</Span>

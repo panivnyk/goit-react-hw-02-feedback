@@ -1,4 +1,5 @@
 import { Component } from 'react';
+// import PropTypes from 'prop-types';
 // import styled
 import {
   Div,
@@ -6,6 +7,8 @@ import {
   Button,
   PStat,
   Span,
+  SpanTotal,
+  SpanPercentage,
 } from 'components/Feedback/Feedback.styled';
 
 class Feedback extends Component {
@@ -39,6 +42,17 @@ class Feedback extends Component {
     });
   };
 
+  countTotalFeedback() {
+    return this.state.good + this.state.neutral + this.state.bad;
+  }
+  countPositiveFeedbackPercentage = () => {
+    return Number.parseInt(
+      this.state.good > 0
+        ? (this.state.good / this.countTotalFeedback()) * 100
+        : 0
+    );
+  };
+
   render() {
     return (
       <Div>
@@ -58,9 +72,21 @@ class Feedback extends Component {
         <Span>Good: {this.state.good}</Span>
         <Span>Neutral: {this.state.neutral}</Span>
         <Span>Bad: {this.state.bad}</Span>
+        <SpanTotal>Total: {this.countTotalFeedback()}</SpanTotal>
+        <SpanPercentage>
+          Positive feedback: {this.countPositiveFeedbackPercentage()}%
+        </SpanPercentage>
       </Div>
     );
   }
 }
 
 export default Feedback;
+
+// Feedback.propTypes = {
+//   good: PropTypes.number.isRequired,
+//   neutral: PropTypes.number.isRequired,
+//   bad: PropTypes.number.isRequired,
+//   total: PropTypes.number.isRequired,
+//   positive: PropTypes.number.isRequired,
+// };

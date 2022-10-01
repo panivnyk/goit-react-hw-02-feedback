@@ -43,3 +43,13 @@ export const Span = styled.span`
   margin-bottom: 10px;
   font-size: 20px;
 `;
+
+export const SpanTotal = styled.span`
+  margin-bottom: 10px;
+  font-size: 20px;
+`;
+
+export const SpanPercentage = styled.span`
+  margin-bottom: 10px;
+  font-size: 20px;
+`;

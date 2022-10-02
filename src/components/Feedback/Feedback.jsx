@@ -1,15 +1,10 @@
 import { Component } from 'react';
-// import PropTypes from 'prop-types';
+
+import { Statistics } from 'components/Statistics/Statistics';
+import { FeedbackOptions } from 'components/FeedbackOptions/FeedbackOptions';
+import { Notification } from 'components/Notification/Notification';
 // import styled
-import {
-  Div,
-  PHeader,
-  Button,
-  PStat,
-  Span,
-  SpanTotal,
-  SpanPercentage,
-} from 'components/Feedback/Feedback.styled';
+import { Div } from 'components/Feedback/Feedback.styled';
 
 class Feedback extends Component {
   state = {
@@ -18,28 +13,10 @@ class Feedback extends Component {
     bad: 0,
   };
 
-  handleBtnGood = () => {
-    this.setState(prevState => {
-      return {
-        good: prevState.good + 1,
-      };
-    });
-  };
-
-  handleBtnNeutral = () => {
-    this.setState(prevState => {
-      return {
-        neutral: prevState.neutral + 1,
-      };
-    });
-  };
-
-  handleBtnBad = () => {
-    this.setState(prevState => {
-      return {
-        bad: prevState.bad + 1,
-      };
-    });
+  onLeaveFeedback = option => {
+    this.setState(prevState => ({
+      [option]: prevState[option] + 1,
+    }));
   };
 
   countTotalFeedback() {
@@ -54,39 +31,30 @@ class Feedback extends Component {
   };
 
   render() {
+    const { good, neutral, bad } = this.state;
+    const options = Object.keys(this.state);
+    const total = this.countTotalFeedback();
+    const positivePercentage = this.countPositiveFeedbackPercentage();
     return (
       <Div>
-        <PHeader>Please leave feedback</PHeader>
-        <div>
-          <Button type="button" onClick={this.handleBtnGood}>
-            Good
-          </Button>
-          <Button type="button" onClick={this.handleBtnNeutral}>
-            Neutral
-          </Button>
-          <Button type="button" onClick={this.handleBtnBad}>
-            Bad
-          </Button>
-        </div>
-        <PStat>Statistics:</PStat>
-        <Span>Good: {this.state.good}</Span>
-        <Span>Neutral: {this.state.neutral}</Span>
-        <Span>Bad: {this.state.bad}</Span>
-        <SpanTotal>Total: {this.countTotalFeedback()}</SpanTotal>
-        <SpanPercentage>
-          Positive feedback: {this.countPositiveFeedbackPercentage()}%
-        </SpanPercentage>
+        <FeedbackOptions
+          options={options}
+          onLeaveFeedback={this.onLeaveFeedback}
+        />
+        {total === 0 ? (
+          <Notification message="There is no feedback" />
+        ) : (
+          <Statistics
+            good={good}
+            neutral={neutral}
+            bad={bad}
+            total={total}
+            positivePercentage={positivePercentage}
+          />
+        )}
       </Div>
     );
   }
 }
 
 export default Feedback;
-
-// Feedback.propTypes = {
-//   good: PropTypes.number.isRequired,
-//   neutral: PropTypes.number.isRequired,
-//   bad: PropTypes.number.isRequired,
-//   total: PropTypes.number.isRequired,
-//   positive: PropTypes.number.isRequired,
-// };
